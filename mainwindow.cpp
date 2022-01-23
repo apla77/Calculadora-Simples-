@@ -76,19 +76,38 @@ void MainWindow::on_btn_add_clicked()
 }
 
 
+void MainWindow::on_btn_multi_clicked()
+{
+    ui->lineCampo->setText( ui->lineCampo->text() + " x ");
+}
+
+
+void MainWindow::on_btn_subtra_clicked()
+{
+    ui->lineCampo->setText( ui->lineCampo->text() + " - ");
+}
+
+
+void MainWindow::on_btn_dividir_clicked()
+{
+    ui->lineCampo->setText( ui->lineCampo->text() + " ÷ ");
+}
+
 void MainWindow::on_btn_total_clicked()
 {
     double tot = 0;
     QStringList lista = ui->lineCampo->text().split(" ");
-    double pri = lista[0].toDouble();
-    double seg = lista[2].toDouble();
+    double pri = lista[0].replace(",", ".").toDouble();
+    double seg = lista[2].replace(",", ".").toDouble();
     QString operador = lista[1];
 
-   // if(lista[1] == operador){
-   //     tot = pri + seg;
-  //  }
     tot = operacao(pri, operador, seg);
-    ui->lineCampo->setText(QString::number(tot));
+    if(operador == "/" && seg == 0){
+        ui->lineCampo->setText("Não é possível dividir por zero");
+    }
+    else{
+        ui->lineCampo->setText(QString::number(tot).replace(".", ","));
+    }
 }
 
 
@@ -96,6 +115,12 @@ void MainWindow::on_btn_limpar_clicked()
 {
     ui->lineCampo->setText("");
 }
+
+void MainWindow::on_btn_virgula_clicked()
+{
+    ui->lineCampo->setText( ui->lineCampo->text() + ",");
+}
+
 
 void MainWindow::on_btn_quadra_clicked()
 {
@@ -108,5 +133,18 @@ double MainWindow::operacao(double pri, QString op, double seg){
     if(op == "+"){
         total = pri + seg;
     }
+    else if(op == "-"){
+        total = pri - seg;
+    }
+    if(op == "x"){
+        total = pri * seg;
+    }
+    if(op == "÷"){
+        total = pri / seg;
+    }
     return total;
 }
+
+
+
+

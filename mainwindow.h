@@ -46,6 +46,14 @@ private slots:
 
     void on_btn_quadra_clicked();
 
+    void on_btn_dividir_clicked();
+
+    void on_btn_multi_clicked();
+
+    void on_btn_subtra_clicked();
+
+    void on_btn_virgula_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
