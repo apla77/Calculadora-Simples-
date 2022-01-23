@@ -15,6 +15,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    double operacao(double pri, QString op, double seg);
+
 private slots:
     void on_btn_7_clicked();
 
@@ -36,7 +38,16 @@ private slots:
 
     void on_btn_0_clicked();
 
+    void on_btn_add_clicked();
+
+    void on_btn_total_clicked();
+
+    void on_btn_limpar_clicked();
+
+    void on_btn_quadra_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
+
 #endif // MAINWINDOW_H
