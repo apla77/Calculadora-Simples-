@@ -93,20 +93,21 @@ void MainWindow::on_btn_dividir_clicked()
     ui->lineCampo->setText( ui->lineCampo->text() + " ÷ ");
 }
 
+void MainWindow::on_btn_porcen_clicked()
+{
+    ui->lineCampo->setText( ui->lineCampo->text() + "%");
+    double total = operacao(ui->lineCampo->text());
+    ui->lineCampo->setText(QString::number(total).replace(".", ","));
+}
+
 void MainWindow::on_btn_total_clicked()
 {
-    double tot = 0;
-    QStringList lista = ui->lineCampo->text().split(" ");
-    double pri = lista[0].replace(",", ".").toDouble();
-    double seg = lista[2].replace(",", ".").toDouble();
-    QString operador = lista[1];
-
-    tot = operacao(pri, operador, seg);
-    if(operador == "/" && seg == 0){
-        ui->lineCampo->setText("Não é possível dividir por zero");
+    double tot = operacao(ui->lineCampo->text());
+    if(tot != qInf()){
+        ui->lineCampo->setText(QString::number(tot).replace(".", ","));
     }
     else{
-        ui->lineCampo->setText(QString::number(tot).replace(".", ","));
+        ui->lineCampo->setText("Não é possível dividir por zero");
     }
 }
 
@@ -121,6 +122,11 @@ void MainWindow::on_btn_virgula_clicked()
     ui->lineCampo->setText( ui->lineCampo->text() + ",");
 }
 
+void MainWindow::on_btn_apagar_um_clicked()
+{
+    QString apagaUltimo = ui->lineCampo->text();
+    ui->lineCampo->setText( apagaUltimo.remove(apagaUltimo.size() -1, 1));
+}
 
 void MainWindow::on_btn_quadra_clicked()
 {
@@ -128,22 +134,41 @@ void MainWindow::on_btn_quadra_clicked()
     ui->lineCampo->setText(QString::number(total));
 }
 
-double MainWindow::operacao(double pri, QString op, double seg){
-    double total = 0.0;
+double MainWindow::operacao(QString campoTexto){
+
+    QString op2 = campoTexto[campoTexto.size() - 1];
+    if(op2 == "%"){
+        ui->lineCampo->setText(campoTexto.remove(campoTexto.size() -1, 1));
+    }
+    QStringList lista = campoTexto.split(" ");
+    double pri = lista[0].replace(",", ".").toDouble();
+    double seg = lista[2].replace(",", ".").toDouble();
+    QString op = lista[1];
+
+    double total = 0;
+
     if(op == "+"){
         total = pri + seg;
+    }
+    else if(op2 == "%"){
+        total = pri * (seg/100);
     }
     else if(op == "-"){
         total = pri - seg;
     }
-    if(op == "x"){
+    else if(op == "x"){
         total = pri * seg;
     }
-    if(op == "÷"){
+    else if(op == "÷"){
         total = pri / seg;
     }
     return total;
 }
+
+
+
+
+
 
 
 

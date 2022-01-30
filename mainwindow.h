@@ -15,7 +15,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    double operacao(double pri, QString op, double seg);
+    double operacao(QString campoTexto);
+    //double operacao(double pri, QString op, double seg);
+
 
 private slots:
     void on_btn_7_clicked();
@@ -53,6 +55,10 @@ private slots:
     void on_btn_subtra_clicked();
 
     void on_btn_virgula_clicked();
+
+    void on_btn_porcen_clicked();
+
+    void on_btn_apagar_um_clicked();
 
 private:
     Ui::MainWindow *ui;
